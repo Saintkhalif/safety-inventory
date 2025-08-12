@@ -14,9 +14,9 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     # Create default user if not exists
-    if not User.query.filter_by(email='safety@jenga').first():
-        default_user = User(email='safety@jenga.com', is_active=True)
-        default_user.set_password('safety@2025')
+    if not User.query.filter_by(email='admin@example.com').first():
+        default_user = User(email='admin@example.com', is_active=True)
+        default_user.set_password('admin123')
         db.session.add(default_user)
         db.session.commit()
 
@@ -185,8 +185,9 @@ def export_to_excel():
     response.headers['Content-type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     return response
 
-import os
-
 if __name__ == '__main__':
+    app.run(debug=True)
+
+    if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
