@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold">Edit Equipment</h1>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <form method="POST" action="{{ url_for('edit_equipment', id=equipment.id) }}">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="col-span-2">
+                    <label for="name" class="block text-gray-700 mb-2">Equipment Name *</label>
+                    <input type="text" id="name" name="name" value="{{ equipment.name }}" required 
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="col-span-2">
+                    <label for="description" class="block text-gray-700 mb-2">Description</label>
+                    <textarea id="description" name="description" rows="3"
+                              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ equipment.description }}</textarea>
+                </div>
+                
+                <div>
+                    <label for="quantity" class="block text-gray-700 mb-2">Quantity *</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="{{ equipment.quantity }}" required 
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                    <label for="unit" class="block text-gray-700 mb-2">Unit *</label>
+                    <select id="unit" name="unit" required 
+                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="pcs" {% if equipment.unit == 'pcs' %}selected{% endif %}>pcs</option>
+                        <option value="sets" {% if equipment.unit == 'sets' %}selected{% endif %}>sets</option>
+                        <option value="pairs" {% if equipment.unit == 'pairs' %}selected{% endif %}>pairs</option>
+                        <option value="units" {% if equipment.unit == 'units' %}selected{% endif %}>units</option>
+                        <option value="boxes" {% if equipment.unit == 'boxes' %}selected{% endif %}>boxes</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="condition" class="block text-gray-700 mb-2">Condition *</label>
+                    <select id="condition" name="condition" required 
+                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="New" {% if equipment.condition == 'New' %}selected{% endif %}>New</option>
+                        <option value="Good" {% if equipment.condition == 'Good' %}selected{% endif %}>Good</option>
+                        <option value="Worn" {% if equipment.condition == 'Worn' %}selected{% endif %}>Worn</option>
+                        <option value="Needs Repair" {% if equipment.condition == 'Needs Repair' %}selected{% endif %}>Needs Repair</option>
+                        <option value="Damaged" {% if equipment.condition == 'Damaged' %}selected{% endif %}>Damaged</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="assigned_to" class="block text-gray-700 mb-2">Assigned To</label>
+                    <input type="text" id="assigned_to" name="assigned_to" value="{{ equipment.assigned_to or '' }}" 
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                    <label for="location" class="block text-gray-700 mb-2">Location</label>
+                    <input type="text" id="location" name="location" value="{{ equipment.location or '' }}" 
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                    <label for="date_issued" class="block text-gray-700 mb-2">Date Issued</label>
+                    <input type="date" id="date_issued" name="date_issued" 
+                           value="{{ equipment.date_issued.strftime('%Y-%m-%d') if equipment.date_issued else '' }}" 
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div>
+                    <label for="last_inspected" class="block text-gray-700 mb-2">Last Inspected</label>
+                    <input type="date" id="last_inspected" name="last_inspected" 
+                           value="{{ equipment.last_inspected.strftime('%Y-%m-%d') if equipment.last_inspected else '' }}" 
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="col-span-2">
+                    <label for="remarks" class="block text-gray-700 mb-2">Remarks</label>
+                    <textarea id="remarks" name="remarks" rows="2"
+                              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ equipment.remarks or '' }}</textarea>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-end space-x-3">
+                <a href="{{ url_for('equipment_list') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                    Cancel
+                </a>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    Update Equipment
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
